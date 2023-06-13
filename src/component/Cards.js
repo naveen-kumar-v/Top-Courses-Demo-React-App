@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import Card from './Card';
+import DataNotFound from './DataNotFound'
 
 export default function Cards({ courses, category }) {
 
     const [likedCourse, setLikedCourse] = useState([])
 
+    let allCourses = [];
     const getCourses = () => {
 
         if (category === 'All') {
-            let allCourses = [];
             if (courses) {
                 Object.values(courses).forEach((courseCategory) => {
                     courseCategory.forEach((course) => {
@@ -24,17 +25,21 @@ export default function Cards({ courses, category }) {
 
     };
 
+    allCourses = getCourses();
 
     return (
+
         <div className='cards'>
-            {getCourses().map((course) => (
-                <Card
-                    course={course}
-                    key={course.id}
-                    likedCourse={likedCourse}
-                    setLikedCourse={setLikedCourse}
-                />
-            ))}
+            {
+                allCourses.map((course) => (
+                    <Card
+                        course={course}
+                        key={course.id}
+                        likedCourse={likedCourse}
+                        setLikedCourse={setLikedCourse}
+                    />
+                ))
+            }
         </div>
     );
 }

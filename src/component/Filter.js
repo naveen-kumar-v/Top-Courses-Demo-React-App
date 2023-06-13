@@ -6,7 +6,7 @@ export default function Filter({ filterData, category, setCategory }) {
     function handleCategoryClick(title) {
         setCategory(title);
     }
-    console.log(category)
+
     return (
         <div className='filter-btns'>
             {

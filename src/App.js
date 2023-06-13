@@ -6,6 +6,7 @@ import Cards from './component/Cards'
 import { apiUrl, filterData } from './data'
 import { toast } from 'react-toastify';
 import { Spinner } from './component/Spinner';
+import DataNotFound from './component/DataNotFound';
 
 function App() {
 
@@ -19,11 +20,10 @@ function App() {
       try {
         const res = await fetch(apiUrl);
         const output = await res.json();
-        console.log(output);
         setCourses(output.data)
       }
       catch (error) {
-        toast.error("something went wrong while fetching data");
+        console.log("error")
       }
       setLoader(false);
     }
@@ -35,14 +35,16 @@ function App() {
       <div>
         <NavBar />
       </div>
+
       <div className="filter-data">
         <Filter filterData={filterData}
           category={category}
           setCategory={setCategory}
         />
       </div>
+
       <div>
-        {loader ? <Spinner /> : <Cards courses={courses} category={category} />}
+        {loader ? <Spinner /> : (courses ? <Cards courses={courses} category={category} /> : <DataNotFound />)}
       </div>
     </div>
   );
@@ -51,15 +53,3 @@ function App() {
 export default App;
 
 
-// let oldStyle = { color: "white" };
-//   const [style, setStyle] = useState(oldStyle)
-//   let newStyle = { color: "red", width: "20px" }
-//   function handleClick() {
-//     setStyle(style.color === "white" ? newStyle : oldStyle)
-//   }
-
-//   return (
-//     <div className="icon">
-//       <FaHeart className='heart' style={style} onClick={handleClick} />
-//     </div>
-//   );
